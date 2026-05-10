@@ -1,8 +1,12 @@
+// Copyright (c) 2023 Your Name
+
+#include <iostream>
+#include <string>
 #include "textgen.h"
 
 int main() {
-    ifstream file = ifstream("input.txt");
-    TextGenerator gen = TextGenerator(file);
-    string text = gen.Generate();
-    cout << text;
+	std::ifstream file = std::ifstream("input.txt");
+	TextGenerator gen = TextGenerator(file);
+	std::string text = gen.Generate();
+	std::cout << text;
 }
