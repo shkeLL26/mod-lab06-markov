@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Your Name
+// Copyright (c) 2026 Shkelev Egor
 
 #include <iostream>
 #include <string>
