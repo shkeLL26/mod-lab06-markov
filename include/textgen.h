@@ -16,7 +16,7 @@
 typedef std::deque<std::string> prefix;
 
 class TextGenerator {
-public:
+ public:
     const int NPREF = 2;
     const int MAXGEN = 1000;
 
@@ -30,7 +30,7 @@ public:
     explicit TextGenerator(std::string text);
     std::string Generate();
 
-private:
+ private:
     std::map<prefix, std::vector<std::string>> statetab;
     prefix firstPref;
 };
