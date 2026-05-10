@@ -95,7 +95,7 @@ std::string TextGenerator::Generate() {
         return "";
     }
 
-    static std::mt19937 gen(std::random_device{}());
+    static std::mt19937 gen(std::random_device {}());
 
     std::string result;
     prefix curr = firstPref;
