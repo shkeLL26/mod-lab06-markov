@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Shekelev Egor
+
 #pragma once
 
 #include <iostream>
@@ -11,20 +13,24 @@
 #include <cstdlib>
 #include <sstream>
 
-using namespace std;
-
-typedef deque<string> prefix;
+typedef std::deque<std::string> prefix;
 
 class TextGenerator {
-	const int NPREF = 2;
-	const int MAXGEN = 1000;
-	map<prefix, vector<string>> statetab;
-	prefix firstPref;
 public:
-	const map<prefix, vector<string>>& getStateTable() { return statetab; }
-	const prefix& getFirstPrefix() { return firstPref; }
-	TextGenerator();
-	TextGenerator(ifstream& file);
-	TextGenerator(string text);
-	string Generate();
+    const int NPREF = 2;
+    const int MAXGEN = 1000;
+
+    const std::map<prefix, std::vector<std::string>>& getStateTable() {
+        return statetab;
+    }
+    const prefix& getFirstPrefix() { return firstPref; }
+
+    TextGenerator();
+    explicit TextGenerator(std::ifstream& file);
+    explicit TextGenerator(std::string text);
+    std::string Generate();
+
+private:
+    std::map<prefix, std::vector<std::string>> statetab;
+    prefix firstPref;
 };
