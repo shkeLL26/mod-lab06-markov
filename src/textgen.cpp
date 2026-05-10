@@ -1,19 +1,24 @@
+// Copyright (c) 2026 Shkelev Egor
+
 #include "textgen.h"
+#include <random>
 
 TextGenerator::TextGenerator() {
-    ifstream file("input.txt");
+    std::ifstream file("input.txt");
     if (!file) {
-        cout << "Error: couldn`t open the file :(";
-        throw runtime_error("Cannot open file");
+        std::cout << "Error: couldn't open the file :(";
+        throw std::runtime_error("Cannot open file");
     }
 
     prefix pref;
-    string word;
+    std::string word;
 
     for (int i = 0; i < NPREF; ++i) {
         if (!(file >> word)) {
-            cout << "Error: file contains less then " << NPREF << " words :(";
-            throw invalid_argument("Error: file contains less then NPREF words :(");
+            std::cout << "Error: file contains less than " << NPREF
+                << " words :(";
+            throw std::invalid_argument(
+                "Error: file contains less than NPREF words :(");
         }
         pref.push_back(word);
     }
@@ -29,19 +34,21 @@ TextGenerator::TextGenerator() {
     file.close();
 }
 
-TextGenerator::TextGenerator(ifstream& file) {
+TextGenerator::TextGenerator(std::ifstream& file) {
     if (!file) {
-        cout << "Error: couldn`t open the file :(";
-        throw runtime_error("Cannot open file");
+        std::cout << "Error: couldn't open the file :(";
+        throw std::runtime_error("Cannot open file");
     }
 
     prefix pref;
-    string word;
+    std::string word;
 
     for (int i = 0; i < NPREF; ++i) {
         if (!(file >> word)) {
-            cout << "Error: file contains less then " << NPREF << " words :(";
-            throw invalid_argument("Error: file contains less then NPREF words :(");
+            std::cout << "Error: file contains less than " << NPREF
+                << " words :(";
+            throw std::invalid_argument(
+                "Error: file contains less than NPREF words :(");
         }
         pref.push_back(word);
     }
@@ -57,15 +64,17 @@ TextGenerator::TextGenerator(ifstream& file) {
     file.close();
 }
 
-TextGenerator::TextGenerator(string text) {
-    istringstream iss(text);
+TextGenerator::TextGenerator(std::string text) {
+    std::istringstream iss(text);
     prefix pref;
-    string word;
+    std::string word;
 
     for (int i = 0; i < NPREF; ++i) {
         if (!(iss >> word)) {
-            cout << "Error: file contains less then " << NPREF << " words :(";
-            throw invalid_argument("Error: file contains less then NPREF words :(");
+            std::cout << "Error: file contains less than " << NPREF
+                << " words :(";
+            throw std::invalid_argument(
+                "Error: file contains less than NPREF words :(");
         }
         pref.push_back(word);
     }
@@ -79,14 +88,14 @@ TextGenerator::TextGenerator(string text) {
     }
 }
 
-string TextGenerator::Generate() {
+std::string TextGenerator::Generate() {
     if (statetab.empty()) {
         return "";
     }
 
-    srand(time(nullptr));
+    static std::mt19937 gen(std::random_device{}());
 
-    string result;
+    std::string result;
     prefix curr = firstPref;
     for (const auto& w : curr) {
         result += w + " ";
@@ -101,8 +110,9 @@ string TextGenerator::Generate() {
         }
 
         const auto& suffixes = it->second;
-        int index = rand() % suffixes.size();
-        string nextWord = suffixes[index];
+        std::uniform_int_distribution<> dist(0, suffixes.size() - 1);
+        int index = dist(gen);
+        std::string nextWord = suffixes[index];
 
         result += nextWord + " ";
         curr.pop_front();
@@ -110,7 +120,7 @@ string TextGenerator::Generate() {
         wordCounter++;
     }
 
-    ofstream out("output.txt");
+    std::ofstream out("output.txt");
     if (!out) {
         std::cout << "Error: creating output.txt :(\n";
         return result;
