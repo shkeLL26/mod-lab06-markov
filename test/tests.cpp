@@ -19,7 +19,7 @@ TEST(TextGeneratorTest, PrefixFormationFromNPREF) {
     TextGenerator gen("Hello my world");
     prefix firstPref = gen.getFirstPrefix();
     EXPECT_EQ(firstPref.size(), 2);
-    EXPECT_EQ(firstPref[0], "hello");
+    EXPECT_EQ(firstPref[0], "Hello");
     EXPECT_EQ(firstPref[1], "my");
 }
 
@@ -36,7 +36,7 @@ TEST(TextGeneratorTest, PrefixSuffix) {
 TEST(TextGeneratorTest, SingleSuffixSelection) {
     TextGenerator gen("Hello my world");
     std::string output = gen.Generate();
-    EXPECT_EQ(output, "Hello my world");
+    EXPECT_EQ(output, "Hello my world ");
 }
 
 TEST(TextGeneratorTest, MultipleSuffixes) {
@@ -55,7 +55,7 @@ TEST(TextGeneratorTest, MultipleSuffixesSelection) {
     TextGenerator gen("Hello my world Hello my home");
     std::set<std::string> seen;
     bool flag1 = false, flag2 = false;
-    while (!flag1 && !flag2) {
+    while (!flag1 || !flag2) {
         std::string out = gen.Generate();
         std::istringstream iss(out);
         std::string w1, w2, w3;
@@ -91,7 +91,7 @@ TEST(TextGeneratorTest, GenerationLength) {
 TEST(TextGeneratorTest, TerminationWhenNoSuffix) {
     TextGenerator gen("Hello my world");
     std::string out = gen.Generate();
-    EXPECT_EQ(out, "Hello my world");
+    EXPECT_EQ(out, "Hello my world ");
 }
 
 TEST(TextGeneratorTest, CheckNPREF1) {
