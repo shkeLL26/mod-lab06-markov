@@ -2,6 +2,8 @@
 
 #include "textgen.h"
 #include <random>
+#include <string>
+#include <iostream>
 
 TextGenerator::TextGenerator() {
     std::ifstream file("input.txt");
